@@ -1,12 +1,15 @@
 export function normalizePhoneNumber(value: string) {
   const raw = String(value || '').trim()
   if (!raw) return ''
+  if (!/^[+\d\s()./-]+$/.test(raw)) return ''
+  if ((raw.match(/\+/g) || []).length > 1 || (raw.includes('+') && !raw.startsWith('+'))) {
+    return ''
+  }
   const digits = raw.replace(/\D/g, '')
-  if (raw.startsWith('+') && /^\+[1-9]\d{7,14}$/.test(raw)) return raw
-  if (digits.length === 10) return `+1${digits}`
-  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`
-  if (digits.length >= 8 && digits.length <= 15) return `+${digits}`
-  return ''
+  const normalized = !raw.startsWith('+') && digits.length === 10
+    ? `+1${digits}`
+    : `+${digits}`
+  return /^\+[1-9]\d{7,14}$/.test(normalized) ? normalized : ''
 }
 
 export function isDialablePhoneNumber(value: string) {
