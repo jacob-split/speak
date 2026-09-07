@@ -24,10 +24,10 @@
       "sourceSyncedAt": "2026-06-27T14:12:00.000Z",
       "context": {
         "text": "Operations needs an implementation checklist or signed order form before onboarding review. Mention the workspace only after confirming Maya is available.",
-        "urls": ["https://files.split-llc.com/speak/agent-integration.md"],
+        "urls": ["https://speak.split-llc.com/agent-integration.md"],
         "urlSnapshots": [
           {
-            "url": "https://files.split-llc.com/speak/agent-integration.md",
+            "url": "https://speak.split-llc.com/agent-integration.md",
             "title": "Orion Systems operations checklist",
             "text": "Implementation checklist, signed order form, owner ID, and implementation confirmation.",
             "status": "ready",
@@ -266,10 +266,10 @@
       },
       "context": {
         "text": "This agent handles onboarding follow-up. Keep calls short, ask one question at a time, and preserve proof after tool use.",
-        "urls": ["https://files.split-llc.com/speak/communication-thread-model.md"],
+        "urls": ["https://speak.split-llc.com/communication-thread-model.md"],
         "urlSnapshots": [
           {
-            "url": "https://files.split-llc.com/speak/communication-thread-model.md",
+            "url": "https://speak.split-llc.com/communication-thread-model.md",
             "title": "Onboarding follow-up playbook",
             "text": "Confirm identity, state missing document, ask permission before sending a workspace link.",
             "status": "ready",

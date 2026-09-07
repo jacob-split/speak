@@ -269,7 +269,7 @@ await fetch('/speak/api/leads/lead-orion', {
   body: JSON.stringify({
     context: {
       text: 'Use implementation notes only if the customer asks about onboarding.',
-      urls: ['https://files.split-llc.com/speak/agent-integration.md'],
+      urls: ['https://speak.split-llc.com/agent-integration.md'],
       files: [attachment],
     },
   }),

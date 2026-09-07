@@ -87,7 +87,8 @@
     "repair:communication-source-dedup:apply": "node scripts/repair-communication-source-dedup.mjs --apply",
     "repair:default-off-inbound-calls": "node scripts/repair-default-off-inbound-calls.mjs",
     "repair:default-off-inbound-calls:apply": "node scripts/repair-default-off-inbound-calls.mjs --apply",
-    "preview": "VITE_BASE_PATH=/speak/ vite preview"
+    "preview": "VITE_BASE_PATH=/speak/ vite preview",
+    "qa:public-links": "node scripts/check-public-links.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
@@ -131,7 +132,7 @@
     "type": "git",
     "url": "https://github.com/jacob-split/speak.git"
   },
-  "homepage": "https://files.split-llc.com/speak/",
+  "homepage": "https://speak.split-llc.com/",
   "bugs": {
     "url": "https://github.com/jacob-split/speak/issues"
   },

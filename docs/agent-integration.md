@@ -204,7 +204,7 @@ await speakInvoke('update_lead', {
     patch: {
       context: {
         text: 'Customer asked about onboarding details. Use this only when relevant.',
-        urls: ['https://files.split-llc.com/speak/communication-thread-model.md'],
+        urls: ['https://speak.split-llc.com/communication-thread-model.md'],
         files: [attachment],
       },
     },

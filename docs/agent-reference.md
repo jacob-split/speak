@@ -83,7 +83,7 @@ Contact Memory and Agent Knowledge Layer content lives in the workspace records:
 {
   "context": {
     "text": "Operator-authored notes",
-    "urls": ["https://files.split-llc.com/speak/agent-reference.md"],
+    "urls": ["https://speak.split-llc.com/agent-reference.md"],
     "urlSnapshots": [],
     "files": []
   }
