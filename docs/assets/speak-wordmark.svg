@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="132" viewBox="0 0 460 132" role="img" aria-labelledby="title desc">
+  <title id="title">Speak</title>
+  <desc id="desc">Speak waveform logo and thin wordmark with matched visual weight.</desc>
+  <style>
+    .wordmark {
+      font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', Inter, ui-sans-serif, system-ui, sans-serif;
+      font-weight: 200;
+      letter-spacing: 0;
+    }
+  </style>
+  <defs>
+    <linearGradient id="speak-wave" x1="66" y1="18" x2="66" y2="114" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c6c6c6"/>
+      <stop offset="0.48" stop-color="#9b9b9b"/>
+      <stop offset="1" stop-color="#737373"/>
+    </linearGradient>
+  </defs>
+  <path d="M26 59V73M46 39V93M66 18V114M86 48V84M106 59V73" fill="none" stroke="url(#speak-wave)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="wordmark" x="142" y="85" fill="#171719" font-size="67">Speak</text>
+</svg>

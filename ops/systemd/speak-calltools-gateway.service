@@ -1,0 +1,24 @@
+[Unit]
+Description=Split target Speak CallTools browser gateway
+After=network-online.target speak.service
+Wants=network-online.target
+Requires=speak.service
+
+[Service]
+Type=simple
+User=speak-target
+Group=speak-target
+WorkingDirectory=/opt/speak
+Environment=HOME=/opt/speak
+Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/speak-browsers
+Environment=CALLTOOLS_GATEWAY_PAGE_URL=http://127.0.0.1:8791/speak/calltools-gateway.html
+EnvironmentFile=/etc/speak/speak.env
+# Legacy opaque profile ID retained because it is the persisted CallTools profile identity, not a host route.
+ExecStart=/usr/bin/npm run calltools:gateway
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/var/log/speak/calltools-gateway.log
+StandardError=append:/var/log/speak/calltools-gateway.error.log
+
+[Install]
+WantedBy=multi-user.target

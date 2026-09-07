@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Speak app icon</title>
+  <desc id="desc">Speak waveform mark in a rounded-square app icon container, using thin minimal strokes matching the light wordmark.</desc>
+  <defs>
+    <linearGradient id="icon-bg" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2a2b2d"/>
+      <stop offset="1" stop-color="#151618"/>
+    </linearGradient>
+    <linearGradient id="speak-wave" x1="512" y1="196" x2="512" y2="828" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d6d6d6"/>
+      <stop offset="0.5" stop-color="#a7a7a7"/>
+      <stop offset="1" stop-color="#797979"/>
+    </linearGradient>
+  </defs>
+  <rect x="64" y="64" width="896" height="896" rx="214" fill="url(#icon-bg)"/>
+  <rect x="96" y="96" width="832" height="832" rx="186" fill="none" stroke="#fff" stroke-opacity="0.08"/>
+  <path d="M236 462V562M374 330V694M512 196V828M650 384V640M788 462V562" fill="none" stroke="url(#speak-wave)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

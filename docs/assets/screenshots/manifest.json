@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "speak.doc-screenshots.v1",
+  "generatedBy": "npm run docs:screenshots",
+  "viewport": {
+    "width": 1440,
+    "height": 1000,
+    "deviceScaleFactor": 1
+  },
+  "fixtureSources": [
+    {
+      "path": "docs/fixtures/populated-workspace.json",
+      "sha256": "1786852256d1875c664cc1e73513c2993d74467f27c8f185fab9ba71e02aa1f7"
+    },
+    {
+      "path": "docs/fixtures/call-logs/events-2026-06-27.jsonl",
+      "sha256": "b2b523a695451d8d34da0634dbffbda02094cc5d69afa60f359aad2d8886315c"
+    }
+  ],
+  "routeSelectorLabels": [
+    "Library",
+    "Dialer",
+    "Playground"
+  ],
+  "libraryModeLabels": [
+    "Contacts",
+    "Activity",
+    "Agents"
+  ],
+  "captures": [
+    {
+      "file": "library-contacts-light.png",
+      "route": "/speak/library",
+      "appearance": "light",
+      "surface": "library",
+      "mode": "contacts",
+      "sha256": "fb0b5ffeae9eff1a4cd75b26fc3f8239fb8939746c9bb1a5c9bf4ebdc6b4f7bc",
+      "cacheKey": "fb0b5ffeae9e"
+    },
+    {
+      "file": "library-contacts-dark.png",
+      "route": "/speak/library",
+      "appearance": "dark",
+      "surface": "library",
+      "mode": "contacts",
+      "sha256": "11e98f00118f2ce72a9ffd64e50debcf37095a65bfd936ecfd258730c14f18ec",
+      "cacheKey": "11e98f00118f"
+    },
+    {
+      "file": "library-agents-light.png",
+      "route": "/speak/library",
+      "appearance": "light",
+      "surface": "library",
+      "mode": "agents",
+      "sha256": "5d0d4464804b89586874c6644433a5c231559cffe9ba455585d0bf758250c459",
+      "cacheKey": "5d0d4464804b"
+    },
+    {
+      "file": "library-agents-dark.png",
+      "route": "/speak/library",
+      "appearance": "dark",
+      "surface": "library",
+      "mode": "agents",
+      "sha256": "f663dddc0de4ccfd6872c57cb44f1288854e34fb741c95646fe2bf19d54a4cc7",
+      "cacheKey": "f663dddc0de4"
+    },
+    {
+      "file": "library-activity-light.png",
+      "route": "/speak/library",
+      "appearance": "light",
+      "surface": "library",
+      "mode": "activity",
+      "sha256": "258ebcfce82d5315b8efcc2c0af775fc97c35c3638b6c18234e6e3098b32b03e",
+      "cacheKey": "258ebcfce82d"
+    },
+    {
+      "file": "library-activity-dark.png",
+      "route": "/speak/library",
+      "appearance": "dark",
+      "surface": "library",
+      "mode": "activity",
+      "sha256": "1196ef32f4c5981cb7820c1b175e404ceb424e39860cb7467f15f9e495792895",
+      "cacheKey": "1196ef32f4c5"
+    },
+    {
+      "file": "dialer-light.png",
+      "route": "/speak/dialer",
+      "appearance": "light",
+      "surface": "dialer",
+      "mode": "dialer",
+      "sha256": "e40cb2acf2b18b68e4eff04044fd6ac76c982e61121581331aef6ee0723b3192",
+      "cacheKey": "e40cb2acf2b1"
+    },
+    {
+      "file": "dialer-dark.png",
+      "route": "/speak/dialer",
+      "appearance": "dark",
+      "surface": "dialer",
+      "mode": "dialer",
+      "sha256": "70abd70f2faf49fe83679cc5a889afb920e5170a9010e7cdb5287222eb066b61",
+      "cacheKey": "70abd70f2faf"
+    },
+    {
+      "file": "playground-light.png",
+      "route": "/speak/configs",
+      "appearance": "light",
+      "surface": "playground",
+      "mode": "playground",
+      "sha256": "d65127e689093c00c7d475cf0bbfba590c88359270a0b13fb2832c6fab21e670",
+      "cacheKey": "d65127e68909"
+    },
+    {
+      "file": "playground-dark.png",
+      "route": "/speak/configs",
+      "appearance": "dark",
+      "surface": "playground",
+      "mode": "playground",
+      "sha256": "9b57423209ff565fa54c7bb3ffbc153d48ec35d064f2b3f2ed884cb17564312a",
+      "cacheKey": "9b57423209ff"
+    }
+  ]
+}

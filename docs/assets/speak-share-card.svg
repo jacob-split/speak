@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Speak</title>
+  <desc id="desc">Speak preview with thin waveform logo and current product subtitle.</desc>
+  <style>
+    .card-text {
+      font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', Inter, ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: 0;
+    }
+  </style>
+  <defs>
+    <linearGradient id="speak-wave" x1="512" y1="150" x2="512" y2="874" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d6d6d6"/>
+      <stop offset="0.5" stop-color="#a7a7a7"/>
+      <stop offset="1" stop-color="#797979"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#111212"/>
+  <rect x="48" y="48" width="1104" height="534" rx="52" fill="#222323" stroke="#4a4b4b" stroke-width="1"/>
+  <rect x="49" y="49" width="1102" height="189" rx="52" fill="#363737" opacity="0.28"/>
+  <rect x="88" y="88" width="1024" height="454" rx="34" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+  <path d="M206 454V570M359 302V722M512 150V874M665 366V658M818 454V570" transform="translate(112 202) scale(0.29)" fill="none" stroke="url(#speak-wave)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="card-text" x="430" y="336" fill="#ebebeb" font-size="120" font-weight="200">Speak</text>
+  <text class="card-text" x="430" y="410" fill="#a8aaa9" font-size="25" font-weight="300">The director's seat for live autonomous agent</text>
+  <text class="card-text" x="430" y="444" fill="#a8aaa9" font-size="25" font-weight="300">and human voice calls.</text>
+</svg>
