@@ -1,7 +1,7 @@
 import { speakFunctionTools } from './hume-tools.mjs'
 import { callableRestAgentActions } from './agent-action-invoker.mjs'
 
-export const SPEAK_AGENT_CONTRACT_VERSION = '2026-07-18'
+export const SPEAK_AGENT_CONTRACT_VERSION = '2026-09-07'
 
 const contextAttachmentSchema = {
   type: 'object',

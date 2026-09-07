@@ -17,8 +17,6 @@ dist-ssr
 workspace-data
 .codex/
 .playwright-cli/
-.herenow/
-.superpowers/
 
 # Editor directories and files
 .vscode/*

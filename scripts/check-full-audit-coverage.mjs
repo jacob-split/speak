@@ -2,8 +2,6 @@ import { readFileSync } from 'node:fs'
 
 const packageJson = JSON.parse(readFileSync('package.json', 'utf8'))
 const fullAuditSource = readFileSync('scripts/check-full-e2e-audit.mjs', 'utf8')
-const readme = readFileSync('README.md', 'utf8')
-const docsIndex = readFileSync('docs/index.md', 'utf8')
 const executableFullAuditSource = stripRecordSkipCalls(fullAuditSource)
 const scripts = packageJson.scripts || {}
 
@@ -87,7 +85,7 @@ const classifications = {
   },
   'audit:calltools-recording-rhythm': {
     category: 'provider-behavior-audit',
-    coveredBy: ['audit:calltools-recording-transcript', 'qa:production-calltools-s-tier'],
+    coveredBy: ['audit:calltools-recording-transcript'],
     reason: 'Rhythm audit is read-only provider behavior profiling; full audit enforces CallTools recording comparison through recording-derived review.',
   },
   'calltools:gateway': {
@@ -97,7 +95,7 @@ const classifications = {
   },
   'calltools:transcribe-recording': {
     category: 'recording-derived-utility',
-    coveredBy: ['qa:production-calltools-s-tier', 'audit:calltools-recording-transcript'],
+    coveredBy: ['audit:calltools-recording-transcript'],
     reason: 'Speak-generated recording-derived transcripts require CallTools recording audio and are invoked by recording-derived review when supplied.',
   },
   'docs:screenshots': {
@@ -130,11 +128,7 @@ const classifications = {
     coveredBy: ['qa:full-audit-coverage'],
     reason: 'The full audit cannot recursively run itself.',
   },
-  'qa:usb-c-agent-tier': {
-    category: 'legacy-alias',
-    coveredBy: ['qa:speak-agent-tier'],
-    reason: 'Legacy command name retained for compatibility; full audit runs the canonical Speak agent-tier gate.',
-  },
+
   'repair:communication-source-dedup': {
     category: 'maintenance-dry-run',
     coveredBy: ['qa:communication-threads', 'qa:transcript-rendering'],
@@ -242,13 +236,6 @@ for (const { name } of classified) {
   }
 }
 
-if (
-  /The default `qa:full-audit` run is non-live[\s\S]*production provider\s+routing[\s\S]*explicit gated\s+skips/.test(readme) === false
-) {
-  failures.push('README must describe production provider routing as a gated skip in default qa:full-audit mode.')
-}
-failures.push(...verifyDocumentedDirectGates())
-
 const payload = {
   ok: failures.length === 0,
   schemaVersion: 'speak.full-audit-coverage.v1',
@@ -322,50 +309,4 @@ function stripRecordSkipCalls(source) {
     index = cursor
   }
   return output
-}
-
-function verifyDocumentedDirectGates() {
-  const localFailures = []
-  const sections = [
-    {
-      file: 'README.md',
-      body: readme,
-      start: 'Full-audit direct gates are part of the public continuity contract and are',
-      end: '`npm run qa:build-base`',
-    },
-    {
-      file: 'docs/index.md',
-      body: docsIndex,
-      start: '- Full-audit direct gates, checked against',
-      end: '- Build-base subcheck:',
-    },
-  ]
-  for (const { file, body, start, end } of sections) {
-    const section = boundedSection(body, start, end)
-    if (!section) {
-      localFailures.push(`${file}: missing Full-audit direct gates section.`)
-      continue
-    }
-    for (const name of direct) {
-      const token = `npm run ${name}`
-      if (!section.includes(token)) {
-        localFailures.push(`${file}: Full-audit direct gates section missing ${token}.`)
-      }
-    }
-    const documented = [...section.matchAll(/npm run ([a-z0-9:-]+)/g)].map((match) => match[1])
-    for (const name of documented) {
-      if (!directSet.has(name)) {
-        localFailures.push(`${file}: Full-audit direct gates section lists ${name}, but qa:full-audit does not directly invoke it.`)
-      }
-    }
-  }
-  return localFailures
-}
-
-function boundedSection(body, start, end) {
-  const startIndex = body.indexOf(start)
-  if (startIndex < 0) return ''
-  const endIndex = body.indexOf(end, startIndex + start.length)
-  if (endIndex < 0) return body.slice(startIndex)
-  return body.slice(startIndex, endIndex)
 }

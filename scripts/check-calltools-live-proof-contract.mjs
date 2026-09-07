@@ -122,7 +122,6 @@ try {
   const readiness = readFileSync('scripts/check-calltools-readiness.mjs', 'utf8')
   const agentSessionHelper = readFileSync('scripts/ensure-calltools-agent-session.mjs', 'utf8')
   const serverIndex = readFileSync('server/index.mjs', 'utf8')
-  const productionSTier = readFileSync('scripts/check-production-calltools-s-tier.mjs', 'utf8')
   if (/qa:calltools-contact-proof|calltools:prepare-proof-contact/.test(fullAudit)) {
     failures.push('full audit still auto-runs legacy direct/contact proof')
   }
@@ -149,10 +148,10 @@ try {
   if (/prepareProofContact|api\/calltools\/prepare-lead|ensureProofContact/.test(readiness)) {
     failures.push('strict readiness still mutates proof-contact inventory')
   }
-  if (/24 \* 60 \* 60 \* 1000/.test(fullAudit) || /24 \* 60 \* 60 \* 1000/.test(productionSTier)) {
+  if (/24 \* 60 \* 60 \* 1000/.test(fullAudit)) {
     failures.push('CallTools certification proof freshness still permits a 24-hour artifact')
   }
-  if (!/60 \* 60 \* 1000/.test(fullAudit) || !/60 \* 60 \* 1000/.test(productionSTier)) {
+  if (!/60 \* 60 \* 1000/.test(fullAudit)) {
     failures.push('CallTools certification proof freshness is not bounded to one hour')
   }
 

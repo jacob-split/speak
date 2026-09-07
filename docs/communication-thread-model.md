@@ -115,7 +115,7 @@ The model has three jobs:
   attempt transcripts; Playground saved tests carry thread status and summaries;
   MCP widgets and agent contracts expose communication-thread summaries and
   message reads as first-class proof surfaces.
-- When Activity merges legacy recent-call turns with durable source-thread
+- When Activity merges pre-thread recent-call turns with durable source-thread
   messages, dedupe only on native provider event, message, or source IDs. Do
   not collapse two same-channel SMS/email messages merely because they share a
   thread/channel and lack provider source IDs.
@@ -324,7 +324,7 @@ duplicate native identity into Telnyx- or Gmail-shaped fields.
 - Library Activity pulls from contact-scoped thread summaries first and fetches
   messages only when the operator opens a contact/thread. Raw recent-call
   records remain a compatibility source for recordings, call-time totals, and
-  pre-thread audit readback. When a communication thread links to legacy
+  pre-thread audit readback. When a communication thread links to pre-thread
   call/test records, Activity must merge those raw transcript turns into the
   expanded contact thread so older contact/user turns are not dropped by stale
   materialized thread rows. The same source-history fallback is required for
@@ -454,29 +454,16 @@ speak.inbound_call.auto_answer = off
 - Provider-specific memories, if any, are optional readback sources; Speak-owned
   threads are the durable source for cross-provider continuity.
 
-## Migration Plan
+## Backfilling older history
 
-1. Add the thread/message/topic/identity-link store and materialized indexes.
-   Complete.
-2. Mirror new call/test/SMS/email/tool events into both raw call/provider logs
-   and normalized thread messages. Complete for active runtime event paths.
-3. Add read-only thread APIs and update agent contracts/widgets to discover
-   them. Complete for backend, MCP/action invocation, host client, readiness,
-   and QA gates.
-4. Backfill existing call logs into communication threads and messages.
-   Use `npm run backfill:communication-threads` first, then
-   `npm run backfill:communication-threads:apply` during a maintenance window.
-5. Update Library, Dialer, global search, widgets,
-   and agents to consume thread summaries. Complete for the current
-   thread-aware surfaces; raw recent-call/config-test reads remain only as
-   recording/audio compatibility and pre-thread audit readbacks.
-6. Move remaining compatibility UI reads from recent-call heuristics to
-   thread/topic summaries.
-7. Add SMS/call/email attribution only after identity links and
-   unresolved-attribution handling exist. Complete for Telnyx SMS inbox/outbox,
-   default-off missed inbound-call normalization, trusted Workspace
-   sent/received email webhook intake, and bounded GOG-backed Workspace inbox/
-   outbox sync; explicit operator resolution UI remains future work.
+The thread model is implemented for current call, browser-test, SMS, email, and tool-proof paths. Existing pre-thread call logs can be imported idempotently with:
+
+```sh
+npm run backfill:communication-threads
+npm run backfill:communication-threads:apply
+```
+
+Run the first command as a dry run and review the planned records before applying. Raw call/test history remains available for recording/audio readback and older records that have not been backfilled.
 
 ## Verification
 

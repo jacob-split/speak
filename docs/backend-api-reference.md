@@ -83,13 +83,13 @@ backend behavior:
 | Inbound automation policy | `server/communication-automation.mjs` keeps SMS, email, and inbound-call automation default-off unless explicit contact, agent, or system policy enables it. |
 | Provider event normalization | `server/telnyx-webhook-normalizer.mjs` and `server/workspace-email-normalizer.mjs` convert Telnyx SMS/call events and Workspace/Gmail sent/received events into communication-thread records. |
 | Provider webhook trust | `server/telnyx-webhook-signature.mjs` verifies Telnyx Ed25519 signatures before production webhook events are accepted. |
-| Runtime prompt safety | `server/session-prompt.mjs` adds live-call speech guardrails and extracts profile instructions, including legacy prompt tags. |
+| Runtime prompt safety | `server/session-prompt.mjs` adds live-call speech guardrails and extracts profile instructions, including persisted prompt tags. |
 | Operational dates | `server/operational-time.mjs` keeps call logs and proof artifacts on the Eastern operational day across UTC midnight. |
 | Secret lookup | `server/secrets.mjs` centralizes provider secret reads from environment variables and protected local keychains. |
 
 ## Invocation Model
 
-Agents and host integrations should prefer the generic action endpoint when they need a stable portable action contract. Contact-record routes still use legacy `lead` action names, so keep those names exact in code while using contact/customer language in user-facing copy:
+Agents and host integrations should prefer the generic action endpoint when they need a stable portable action contract. Contact-record routes still use persisted `lead` action names, so keep those names exact in code while using contact/customer language in user-facing copy:
 
 ```ts
 const response = await fetch('/speak/api/agent/actions/update_lead/invoke', {
@@ -160,9 +160,6 @@ portable action row below exposes the same capability.
 | GET | `/api/calltools/gateway-config` | Protected CallTools WebRTC/SIP phone credential read for the persistent Speak media gateway. Requires the gateway shared secret and must never expose phone credentials through public contracts. | no |
 | WS | `/api/calltools/media-gateway` | Protected Speak-owned WebRTC/SIP media-gateway socket. It is a runtime bridge for the persistent CallTools gateway, not an agent action. | no |
 | POST | `/api/webhooks/workspace-email` | Trusted Workspace/Gmail sent/received event normalizer. Internal-only; records email source history and keeps inbound automation off unless a trusted ingester explicitly enables it. | no |
-| OPTIONS | `/api/here-now/upload-proxy` | CORS preflight for the here.now signed-upload proxy. | no |
-| PUT | `/api/here-now/upload-proxy?url={signedR2Url}` | Raw upload proxy for signed here.now R2 drive URLs under `/herenow/drives/`; rejects other URLs. | no |
-| ANY | `/api/here-now/api/v1/*` | Narrow here.now v1 CORS proxy. Forwards caller bearer credentials and does not store, mint, or substitute here.now auth. | no |
 
 ## REST And Action Matrix
 
@@ -357,9 +354,7 @@ email. The check reports Gmail read/source readiness separately from
 send/reply readiness; `WORKSPACE_EMAIL_READ_GOG_ACCOUNT` is required for
 source sync, and `WORKSPACE_EMAIL_SEND_GOG_ACCOUNT` with send scope plus
 accepted send-as identity is required before email replies are end-to-end
-configured. GOG stores mailbox auth accounts additively, so adding Operator,
-Operator, Apps, Teammate, Reports, Hello, or another account should preserve the
-existing entries; Speak chooses the active sender/reader through the
+configured. The configured Gmail account broker should store mailbox auth accounts additively, so adding another account preserves existing entries; Speak chooses the active sender/reader through the
 `WORKSPACE_EMAIL_SEND_GOG_ACCOUNT` and `WORKSPACE_EMAIL_READ_GOG_ACCOUNT`
 environment variables. `npm run qa:workspace-email-source` is the production source-read
 proof; it requires the configured read auth account to return a bounded
@@ -422,7 +417,7 @@ that exact agent and requires browser-side acknowledgement on the already assign
 phone. The voice profile is not overwritten; a busy gateway or conflicting
 explicit phone binding fails before native AgentStatus is armed.
 `GET /api/calltools/readiness` is the read-only production preflight. It returns
-`ready`, `runtimeReady`, legacy `directStartReady`, `campaignReady`, `checks[]`, `blockers[]`, and
+`ready`, `runtimeReady`, diagnostic `directStartReady`, `campaignReady`, `checks[]`, `blockers[]`, and
 `counts` for API auth, agent user, native agent session, WebRTC phone, media
 gateway, campaign, caller ID, live filter, native dispositions, active live
 calls, and outcome writeback. The `agent-session` check reads CallTools
@@ -536,7 +531,7 @@ Supported certification starts with an actual native campaign invite while the
 selected durable lease is Available. Run
 `qa:calltools-live-proof -- --require-complete --callControlId=<id>` against the
 VM log/audio to produce `speak.calltools.campaign-proof.v1`, then pass that
-artifact plus recording-derived review to `qa:production-calltools-s-tier`.
+artifact and run `audit:calltools-recording-transcript` for recording-derived review.
 Fresh calls may still be waiting on CallTools historical recording
 generation; inside `CALLTOOLS_RECORDING_LAG_GRACE_MS`, missing native
 `/calls/` recording metadata is pending provider evidence, not a failure of the
@@ -601,7 +596,7 @@ The browser gateway packetizes inbound WebRTC audio into 20 ms frames at the
 profile sample rate, and the backend stores the observed frame duration as
 `calltools.inputFrameMs` in transport diagnostics. The same snapshot exposes
 CallTools timing fields including `calltoolsDialToGatewayAttach`,
-legacy-named `firstCallToolsLeadAudioToFirstUserMessage` for
+`firstCallToolsLeadAudioToFirstUserMessage` for
 caller/contact audio,
 `firstUserMessageToFirstAssistantAudio`,
 `firstUserMessageToFirstAssistantMessage`, and
@@ -639,7 +634,7 @@ on the call event. Set `CALLTOOLS_SYNC_OUTCOMES=true` to allow confirmed
 `POST /historicalcalldispositions/` writeback.
 
 The shared `hang_up` tool and backend use one canonical hyphenated outcome
-vocabulary; legacy underscore aliases remain accepted. Missing or invalid tool
+vocabulary; underscore aliases remain accepted. Missing or invalid tool
 outcomes fail closed to `no-answer` before the first caller turn or
 `operator-ended` after a conversation, while `completed` requires an explicit
 outcome. Explicit `completed` remains neutral: it maps to the same native

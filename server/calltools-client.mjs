@@ -206,6 +206,17 @@ function positiveMilliseconds(value, fallback) {
   return Number.isFinite(number) && number > 0 ? number : fallback
 }
 
+function requireCallToolsBaseUrl() {
+  const baseUrl = getCallToolsBaseUrl()
+  if (!baseUrl) {
+    throw Object.assign(new Error('CALLTOOLS_BASE_URL is required'), {
+      status: 503,
+      code: 'calltools_base_url_missing',
+    })
+  }
+  return baseUrl
+}
+
 export async function callToolsRequest(path, options = {}) {
   const apiKey = getCallToolsApiKey()
   if (!apiKey) {
@@ -216,7 +227,7 @@ export async function callToolsRequest(path, options = {}) {
   }
 
   const target = new URL(
-    path.startsWith('http') ? path : `${getCallToolsBaseUrl()}/${path.replace(/^\/+/g, '')}`,
+    path.startsWith('http') ? path : `${requireCallToolsBaseUrl()}/${path.replace(/^\/+/g, '')}`,
   )
   Object.entries(options.query || {}).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== '') {
@@ -287,7 +298,7 @@ export async function downloadCallToolsFilesystemFile(id, options = {}) {
     })
   }
   const target = new URL(
-    `${getCallToolsBaseUrl()}/filesystemfiles/${encodeURIComponent(fileId)}/download/`,
+    `${requireCallToolsBaseUrl()}/filesystemfiles/${encodeURIComponent(fileId)}/download/`,
   )
   const timeoutMs = Math.max(
     1_000,

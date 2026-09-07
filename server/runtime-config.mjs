@@ -37,7 +37,7 @@ export const DEFAULT_XAI_OUTPUT_SAMPLE_RATE = 16000
 const DEFAULT_SPEAK_LINK_URL = ''
 
 const DEFAULT_WORKSPACE_EMAIL_ACCOUNT = 'operator@example.com'
-const DEFAULT_GOG_WRAPPER = '/usr/local/bin/split-speak-gog'
+const DEFAULT_GOG_WRAPPER = ''
 const execFileAsync = promisify(execFile)
 const workspaceEmailAuthCache = new Map()
 const workspaceEmailSendAsCache = new Map()
@@ -685,7 +685,7 @@ export function getStreamUrl() {
 }
 
 export function getCallToolsBaseUrl() {
-  return (process.env.CALLTOOLS_BASE_URL || 'https://east-2.calltools.io/api').replace(/\/+$/g, '')
+  return stringConfig(process.env.CALLTOOLS_BASE_URL).replace(/\/+$/g, '')
 }
 
 export function getCallToolsApiKey() {

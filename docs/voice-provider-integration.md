@@ -240,17 +240,14 @@ Create or update a section in this document before implementation:
   socket initialization, audio buffering, tool-call playback ordering, BYO SIP,
   and custom-voice examples.
 - Auth/secrets model: `XAI_API_KEY` is server-only; macOS development may read the
-  global Keychain service `Speak Production`, account `XAI_API_KEY`.
+  optional local Keychain service `speak-xai-api-key`.
   Browser clients remain connected through Speak and never receive the key.
 - Official CLI found: no voice-specific xAI CLI was found.
 - Official MCP found: xAI Realtime can consume remote MCP tools, but no
   provider-account/docs MCP was found or needed for this server-side adapter.
 - MCP verification: installed MCP/plugin inventory contained no xAI provider
   MCP; safe Speak functions remain client-executed custom function tools.
-- Model catalogue source: the Voice Agent guide. `grok-voice-latest` points to
-  `grok-voice-think-fast-1.0`; older Voice Agent model IDs are not offered.
-  is not offered for new profiles. The generic `/v1/models` response does not
-  advertise Voice Agent models.
+- Model catalogue source: the Voice Agent guide. `grok-voice-latest` resolves to the current Voice Agent model; Speak does not expose superseded model IDs for new profiles. The generic `/v1/models` response does not advertise Voice Agent models.
 - Voice catalogue source: merge every built-in from `GET /v1/tts/voices` with
   every page from `GET /v1/custom-voices?limit=1000`; custom voices do not appear
   in the built-in response.
@@ -295,13 +292,6 @@ Create or update a section in this document before implementation:
 - Verification commands: targeted xAI config/session checks plus the standard
   provider, voice-config, communication-thread, MCP, readiness, lint, build, UI,
   browser, and production readback gates below.
-- Production readback: verified July 18, 2026 against
-  `https://speak.example.com/speak`. The live catalogue returned 2 current
-  Voice Agent models and 26 built-in voices with no Codex-auth choices. The
-  no-phone Speak Browser probe followed its system instruction, persisted the
-  xAI transcript, recorded 65,880 assistant-audio bytes, and completed in 5.1
-  seconds end to end. The separate direct-provider probe returned realtime
-  transcript, audio, and a resumable conversation ID in 1.52 seconds.
 
 ## Verification
 

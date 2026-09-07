@@ -1,4 +1,4 @@
-# Speak Production Agent Reference
+# Speak Agent Reference
 
 Speak is designed for portable agent integration: any supported framework should be
 able to discover the same capabilities, choose its preferred transport, and keep
@@ -23,7 +23,7 @@ Runtime endpoints are available under `/api/agent/*`; production uses the
 `https://speak.example.com/speak` origin. Start discovery from
 `https://speak.example.com/speak/api/agent/capabilities`.
 The generated readiness report uses schema `speak.agent-readiness.v1`; the
-current passing production contract reports `readinessLevel=s-class-candidate`,
+current passing contract reports `readinessLevel=s-class-candidate`,
 `overallStatus=pass`, and zero failed checks. Any failed check drops the report
 to `readinessLevel=needs-work` / `overallStatus=fail`.
 
@@ -217,7 +217,7 @@ Use backend-owned state for routine work:
 - `list_profiles`, `upsert_profile`, `set_active_profile`, profile delete/replace.
 - `read_calltools_readiness` for CallTools Phone-as-Agent preflight. It is
   read-only and reports exact transport/campaign blockers. Treat
-  `directStartReady` as legacy diagnostic output only; it never authorizes
+  `directStartReady` as diagnostic output only; it never authorizes
   `/api/calls/start`, which rejects CallTools transport before provider
   mutation. Treat `campaignReady` as the supported operational proof after Go
   available establishes the selected campaign/session: native AgentStatus readiness with
@@ -249,18 +249,7 @@ npm run qa:agent-readiness
 npm run qa:speak-agent-tier
 ```
 
-For documentation or published-surface changes, publish changed files under
-`docs/` to every here.now entry in `.herenow/state.json`. The existing
-`files.split-llc.com/speak` link already points at `onyx-breeze-jbke`, so update
-all registered slugs with `--no-domain-link` instead of attempting to recreate
-that link:
-
-```sh
-while IFS= read -r slug; do
-  bash "$HOME/.codex/skills/here-now/scripts/publish.sh" docs \
-    --slug "$slug" --client codex --title Speak --no-domain-link
-done < <(jq -r '.publishes | keys[]' .herenow/state.json)
-```
+For documentation or published-surface changes, verify the checked-in site and links before publishing.
 
 Then run:
 
@@ -277,12 +266,11 @@ After a completed native campaign call, generate the supported campaign proof:
 npm run qa:calltools-live-proof -- --require-complete --callControlId=<id>
 ```
 
-Then run the release gate with the resulting
-`speak.calltools.campaign-proof.v1` artifact and required recording-derived
-review:
+Then run recording-derived review for the completed call and, for the full release path, supply the proof artifact to the full audit:
 
 ```sh
-npm run qa:production-calltools-s-tier -- --liveProof=<proof.json>
+npm run audit:calltools-recording-transcript -- --callControlId=<id>
+npm run qa:full-audit -- --liveProof=<proof.json>
 ```
 
 selected Available lease, waits for the next native answered invite, and

@@ -337,10 +337,7 @@ transcript/audio after that caller turn, and enough back-and-forth conversation
 to prove both sides are registered. Generate a
 `speak.calltools.campaign-proof.v1` artifact with
 `qa:calltools-live-proof -- --require-complete --callControlId=<id>`, then pass
-it with recording-derived review to `qa:production-calltools-s-tier`. The
-retained auto-dialing contact/answer-bot proof helpers are legacy. Do not report
-raw SIP registration, CallTools call rows, recordings, or recording
-transcription alone as live engine success.
+it with `audit:calltools-recording-transcript` for recording-derived review. Do not report raw SIP registration, CallTools call rows, recordings, or recording transcription alone as live engine success.
 
 Do not call internal/provider routes: `codex_clm_chat_completion`, `phone_media_stream`, `phone_provider_webhook`, `voice_provider_webhook`, or raw provider APIs.
 

@@ -294,7 +294,7 @@ async function verifyNativeSourceNormalization() {
         id: 'msg-inbound-source-routing-check',
         direction: 'inbound',
         from: { phone_number: '+15551234567' },
-        to: [{ phone_number: phoneNumber || '+13369674358' }],
+        to: [{ phone_number: phoneNumber || '+12025550141' }],
         text: 'Can you send that over?',
       },
     })
@@ -305,7 +305,7 @@ async function verifyNativeSourceNormalization() {
       payload: {
         id: 'msg-outbox-source-routing-check',
         direction: 'outbound',
-        from: { phone_number: phoneNumber || '+13369674358' },
+        from: { phone_number: phoneNumber || '+12025550141' },
         to: [{ phone_number: '+15551234567' }],
         completed_at: '2026-07-02T15:01:05.000Z',
         text: 'Here are the details.',
@@ -320,7 +320,7 @@ async function verifyNativeSourceNormalization() {
         call_session_id: 'session-missed-source-routing-check',
         call_direction: 'incoming',
         from: { phone_number: '+15551234567' },
-        to: [{ phone_number: phoneNumber || '+13369674358' }],
+        to: [{ phone_number: phoneNumber || '+12025550141' }],
         hangup_cause: 'no_answer',
       },
     })

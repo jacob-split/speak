@@ -122,7 +122,6 @@ function checkRenderingContracts() {
   const communicationThreadMessages = readFile('src/CommunicationThreadMessages.tsx')
   const communicationThreadMessageUtils = readFile('src/communicationThreadMessageUtils.ts')
   const fullAudit = readFile('scripts/check-full-e2e-audit.mjs')
-  const sTier = readFile('scripts/check-production-calltools-s-tier.mjs')
 
   if (!/indexByProviderEventId/.test(callHistory) || !/normalizeTranscriptText/.test(callHistory)) {
     failures.push('call-history summaries must dedupe transcript turns by provider event id and text identity key')
@@ -185,9 +184,6 @@ function checkRenderingContracts() {
   }
   if (!/qa:transcript-rendering/.test(fullAudit)) {
     failures.push('full E2E audit must include transcript rendering duplicate coverage')
-  }
-  if (!/qa:transcript-rendering/.test(sTier)) {
-    failures.push('CallTools S-tier verifier must require transcript rendering duplicate coverage')
   }
 }
 

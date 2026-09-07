@@ -553,7 +553,7 @@ Expected:
 ## Copy Style
 
 - Short, factual, operational.
-- Use established terms: contact, call, transcript, agent, profile, config, queue, takeover, next, playback, Speak settings. Keep legacy `lead` only where naming actual API fields, action IDs, or persisted schema keys.
+- Use established terms: contact, call, transcript, agent, profile, config, queue, takeover, next, playback, Speak settings. Keep `lead` only where naming actual API fields, action IDs, or persisted schema keys.
 - Model labels must make the route explicit. Use `Hume native` or
   `Inworld native` for provider-owned runtime choices and `Codex auth` for
   Codex-authenticated choices, even when the same OpenAI model family appears

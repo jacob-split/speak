@@ -1726,7 +1726,7 @@ async function verifyDeliveryProviderProof() {
     fs.chmodSync(fakeWrapper, 0o755)
 
     process.env.TELNYX_API_KEY = 'provider-proof-check-key'
-    process.env.TELNYX_SMS_NUMBER = '+13369674358'
+    process.env.TELNYX_SMS_NUMBER = '+12025550141'
     process.env.TELNYX_MESSAGING_PROFILE_ID = 'provider-proof-check-profile'
     process.env.CALLTOOLS_PHONE_NUMBER = '+15550000000'
     process.env.WORKSPACE_EMAIL_ACCOUNT = 'speak@example.com'
@@ -1810,7 +1810,7 @@ async function verifyDeliveryProviderProof() {
     )
     assert(
       smsRequest?.url.endsWith('/messages') &&
-        smsRequest?.body?.from === '+13369674358' &&
+        smsRequest?.body?.from === '+12025550141' &&
         smsRequest?.body?.to === '+15557654321' &&
         smsRequest?.body?.messaging_profile_id === 'provider-proof-check-profile' &&
         !JSON.stringify(smsRequest).includes(process.env.CALLTOOLS_PHONE_NUMBER),
@@ -3867,7 +3867,7 @@ async function verifyTelnyxWebhookNormalizer() {
         call_session_id: 'session-inbound-native-normalizer-check',
         call_direction: 'incoming',
         from: { phone_number: '+15551234567' },
-        to: [{ phone_number: '+13369674358' }],
+        to: [{ phone_number: '+12025550141' }],
         hangup_cause: 'no_answer',
       },
     })
@@ -3877,7 +3877,7 @@ async function verifyTelnyxWebhookNormalizer() {
       'Telnyx inbound call normalizer did not preserve caller identity phone',
     )
     assert(
-      inboundMissedCall?.communicationEvent?.event?.communication?.providerIds?.toPhone === '+13369674358',
+      inboundMissedCall?.communicationEvent?.event?.communication?.providerIds?.toPhone === '+12025550141',
       'Telnyx inbound call normalizer did not preserve called Speak number',
     )
     assert(
@@ -3918,7 +3918,7 @@ async function verifyTelnyxWebhookNormalizer() {
     )
     assert(
       recorded?.message?.providerIds?.fromPhone === '+15551234567' &&
-        recorded?.message?.providerIds?.toPhone === '+13369674358',
+        recorded?.message?.providerIds?.toPhone === '+12025550141',
       'Telnyx inbound call source event did not persist caller/called provider IDs',
     )
     assert(
@@ -4089,11 +4089,11 @@ async function verifyTelnyxWebhookIngressRoute() {
         TELNYX_API_BASE: fakeTelnyxBaseUrl,
         TELNYX_API_KEY: 'telnyx-route-check-key',
         TELNYX_CONNECTION_ID: 'telnyx-route-check-connection',
-        TELNYX_FROM_NUMBER: '+13369674358',
+        TELNYX_FROM_NUMBER: '+12025550141',
         TELNYX_MESSAGING_PROFILE_ID: 'telnyx-route-check-profile',
         TELNYX_SMS_FINALIZATION_POLL_MS: '10',
         TELNYX_SMS_FINALIZATION_TIMEOUT_MS: '1000',
-        TELNYX_SMS_NUMBER: '+13369674358',
+        TELNYX_SMS_NUMBER: '+12025550141',
         TELNYX_WEBHOOK_URL: `${baseUrl}/api/webhooks/telnyx`,
         TELNYX_WEBHOOK_PUBLIC_KEY: rawPublicKey,
         TELNYX_WEBHOOK_SIGNATURE_REQUIRED: 'true',
@@ -4146,7 +4146,7 @@ async function verifyTelnyxWebhookIngressRoute() {
           received_at: '2026-07-02T15:00:00.000Z',
           record_type: 'message',
           text: 'Can you send that over?',
-          to: [{ phone_number: '+13369674358' }],
+          to: [{ phone_number: '+12025550141' }],
         },
       },
     })
@@ -4207,7 +4207,7 @@ async function verifyTelnyxWebhookIngressRoute() {
           call_session_id: 'session-route-inbound-default-off-check',
           from: { phone_number: '+15551234567' },
           state: 'ringing',
-          to: { phone_number: '+13369674358' },
+          to: { phone_number: '+12025550141' },
         },
       },
     })
@@ -4227,7 +4227,7 @@ async function verifyTelnyxWebhookIngressRoute() {
           call_session_id: 'session-route-inbound-auto-answer-check',
           from: { phone_number: '+15557654321' },
           state: 'ringing',
-          to: { phone_number: '+13369674358' },
+          to: { phone_number: '+12025550141' },
         },
       },
     })
@@ -4296,7 +4296,7 @@ async function verifyTelnyxWebhookIngressRoute() {
         autoReplySms.body === 'Hi Casey, route SMS reply.' &&
         autoReplySms.providerIds?.replyToMessageId === inboundSms?.messageId &&
         autoReplySms.providerIds?.toPhone === '+15551234567' &&
-        autoReplySms.providerIds?.fromPhone === '+13369674358' &&
+        autoReplySms.providerIds?.fromPhone === '+12025550141' &&
         autoReplySms.proof?.automation?.action === 'auto_reply_delivered' &&
         autoReplySms.proof?.provider_accepted === true &&
         autoReplySms.proof?.delivery_finalized === true &&
@@ -4370,7 +4370,7 @@ async function verifyTelnyxWebhookIngressRoute() {
           (request) =>
             request.method === 'POST' &&
             request.url === '/messages' &&
-            request.body?.from === '+13369674358' &&
+            request.body?.from === '+12025550141' &&
             request.body?.to === '+15551234567' &&
             request.body?.text === 'Hi Casey, route SMS reply.' &&
             request.body?.messaging_profile_id === 'telnyx-route-check-profile',

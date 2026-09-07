@@ -411,8 +411,8 @@ function requireDocsAndSkillCoverage() {
     'responsive UI reference',
     'qa:ui-contract',
     'https://files.split-llc.com/speak/',
-    'Product site and documents',
-    'Documentation by job',
+    'Product and documentation showcase',
+    'Documentation',
     'Backend API',
     'UI reference',
     'Agent integration',
@@ -420,7 +420,7 @@ function requireDocsAndSkillCoverage() {
     'Voice provider integration',
     'Communication thread model',
     'Configuration options',
-    'Production agent reference',
+    'Agent reference',
     'docs/assets/screenshots/dialer-light.png',
     'docs/assets/screenshots/dialer-dark.png',
     'docs/assets/screenshots/library-contacts-light.png',
@@ -464,15 +464,7 @@ function requireBrandAndSafetyBoundary() {
   if (!contract.hostClient.securityRule?.includes('does not broaden backend authorization')) {
     failures.push('host client security rule does not preserve backend authorization boundary')
   }
-  ;[
-    "app.use('/api/here-now'",
-    'SPEAK_HERE_NOW_PROXY_ORIGINS',
-    'SPEAK_FILE_WAREHOUSE_ORIGINS',
-    'Only here.now v1 API paths can be proxied.',
-    "'authorization', 'content-type', 'if-match'",
-  ].forEach((needle) => {
-    if (!serverSource.includes(needle)) failures.push(`server proxy missing ${needle}`)
-  })
+
 }
 
 function auditSummary() {

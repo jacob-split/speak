@@ -1,7 +1,7 @@
 {
   "name": "speak",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "concurrently -k \"npm run dev:api\" \"npm run dev:ui\"",
@@ -48,7 +48,6 @@
     "qa:calltools-media-gateway": "node scripts/check-calltools-media-gateway.mjs",
     "qa:calltools-live-proof-contract": "node scripts/check-calltools-live-proof-contract.mjs",
     "qa:calltools-live-proof": "node scripts/check-calltools-live-proof.mjs --require-complete",
-    "qa:production-calltools-s-tier": "node scripts/check-production-calltools-s-tier.mjs",
     "audit:calltools-recording-transcript": "node scripts/audit-calltools-recording-transcript.mjs",
     "audit:calltools-recording-rhythm": "node scripts/audit-calltools-recording-rhythm.mjs",
     "calltools:transcribe-recording": "node scripts/transcribe-calltools-recording.mjs",
@@ -74,7 +73,6 @@
     "qa:context-runtime": "node scripts/check-context-runtime.mjs",
     "qa:session-prompt": "node scripts/check-session-prompt.mjs",
     "qa:speak-agent-tier": "node scripts/check-speak-agent-tier.mjs",
-    "qa:usb-c-agent-tier": "npm run qa:speak-agent-tier --",
     "qa:ui-contract": "node scripts/check-ui-contract.mjs",
     "qa:transport": "node scripts/hume-phone-path-check.mjs",
     "sync:workspace-email": "node scripts/sync-workspace-email.mjs",
@@ -139,5 +137,14 @@
   },
   "engines": {
     "node": ">=22"
-  }
+  },
+  "keywords": [
+    "voice-agents",
+    "voice-ai",
+    "mcp",
+    "openapi",
+    "react",
+    "typescript",
+    "telnyx"
+  ]
 }

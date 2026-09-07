@@ -207,29 +207,22 @@ try {
   }
   if (includeLive || liveProofPath || explicitLiveProofPath) {
     if (callToolsPreflightReady() && liveProofPath) {
-      await runGroup('calltools-certification', [
-        [
-          'qa:production-calltools-s-tier',
-          ...(liveProofPath ? [`--liveProof=${liveProofPath}`] : []),
-          ...(calltoolsProfileId ? [`--profileId=${calltoolsProfileId}`] : []),
-        ],
-      ])
       calltoolsRecordingTranscriptTask = startCallToolsRecordingTranscriptForLiveProof()
     } else {
-      recordFailure('calltools-certification', [
-        'qa:production-calltools-s-tier',
-    ], liveProofPath
-      ? 'CallTools native agent-session/readiness preflight failed before S-tier certification.'
-      : 'S-tier certification requires a successful native campaign proof artifact from an active CallTools agent session.')
+      recordFailure('calltools-recording-transcript-review', [
+        'audit:calltools-recording-transcript',
+      ], liveProofPath
+        ? 'CallTools native agent-session/readiness preflight failed before recording-derived review.'
+        : 'Recording-derived review requires a successful live proof artifact from an active CallTools agent session.')
     }
   } else if (certificationRequired) {
-    recordFailure('calltools-certification', [
-      'qa:production-calltools-s-tier',
-    ], 'Certification mode requires a successful live proof artifact before S-tier certification can run.')
+    recordFailure('calltools-recording-transcript-review', [
+      'audit:calltools-recording-transcript',
+    ], 'Certification mode requires a successful live proof artifact before recording-derived review can run.')
   } else {
-    recordSkip('calltools-certification', [
-      'qa:production-calltools-s-tier',
-    ], 'Requires --include-live or --liveProof=<proof.json>; non-live audits keep this as an explicit gated check.')
+    recordSkip('calltools-recording-transcript-review', [
+      'audit:calltools-recording-transcript',
+    ], 'Requires --include-live or --liveProof=<proof.json>; non-live audits keep recording-derived review gated.')
   }
   if (shouldEnsureLocalRenderedServer(renderedBaseUrl)) {
     await ensureLocalDevServer()

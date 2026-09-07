@@ -103,10 +103,10 @@ Do not expose these as general MCP tools:
 ## Workspace Management
 
 1. Read `GET /api/workspace` before changing contacts or saved profiles.
-2. Manage contact records through legacy `/api/leads`: list, replace, create, import, patch, bulk status, and delete.
+2. Manage contact records through persisted `/api/leads`: list, replace, create, import, patch, bulk status, and delete.
 3. Manage saved profiles through `/api/profiles`: list, replace, upsert, set active, and delete.
 4. Preserve returned proof such as `leads[]`, `lead.id`, `profiles[]`, and `activeProfileId`.
-5. Manage durable contact knowledge in legacy `lead.context` and durable agent knowledge in `profile.context`.
+5. Manage durable contact knowledge in persisted `lead.context` and durable agent knowledge in `profile.context`.
 6. For text and URLs, merge the existing context and persist it through `update_lead`, `upsert_profile`, or `replace_profiles`.
 7. For files, upload the raw binary to `POST /api/context-files` with `x-speak-file-name` and `Content-Type`, review the returned `attachment.extractionStatus` and `attachment.contentChars`, then persist the returned attachment metadata in `context.files`.
 8. To delete a context file, remove its attachment metadata from every contact/profile context first, then call `DELETE /api/context-files/{fileId}`.
@@ -128,13 +128,13 @@ Do not expose these as general MCP tools:
 
 1. CallTools remains the native contact-selection and dialing authority; Speak never direct-dials a CallTools contact through `/api/calls/start`.
 2. Select the intended saved Speak agent and CallTools campaign source, then use the Dialer **Go available** action. That single backend action activates/originates the selected campaign, establishes campaign-agent and AgentStatus state, registers SIP, and persists the durable lease across route changes, refreshes, closed tabs, and service restarts until **Go unavailable** completes. No human dashboard login is required.
-3. Read `GET /api/calltools/readiness` for the selected profile. Require `campaignReady=true`, a matching durable lease, native `AgentStatus.ready=true`, selected-campaign binding, `webPhoneRegisteredOn`, `/campaignagents/{app_user_id}` readiness, campaign aggregate proof, and a healthy matching SIP gateway. `directStartReady` is legacy diagnostic output only and never authorizes `/api/calls/start`.
+3. Read `GET /api/calltools/readiness` for the selected profile. Require `campaignReady=true`, a matching durable lease, native `AgentStatus.ready=true`, selected-campaign binding, `webPhoneRegisteredOn`, `/campaignagents/{app_user_id}` readiness, campaign aggregate proof, and a healthy matching SIP gateway. `directStartReady` is diagnostic output only and never authorizes `/api/calls/start`.
 4. Start or release native CallTools campaign-agent state only through `POST /api/calltools/agent-session` with `apply=true` and `confirmAgentSession=true`, or the corresponding backend/headless helper. Do not use browser automation, dashboard login state, `Join Campaign`, or a browser-held webphone session as proof.
 5. Once Available, wait for CallTools to route the next human-answer campaign invite. Confirm the live call is tied to the selected campaign/contact source, then verify live transcript events and communication-thread proof in Speak.
 6. Ending one call must keep Speak Available for the next campaign call. **Go unavailable** is the only normal shared-seat release; require native `ready=false` and SIP unregistration before handing the account to the human agent.
 7. For a non-live readiness audit, use `npm run qa:calltools-readiness -- --require-ready --pause-after-ready`; it may prove and release availability without placing a call.
 8. After a completed native campaign call, run `npm run qa:calltools-live-proof -- --require-complete --callControlId=<id>` against the VM call log/audio. Require a `speak.calltools.campaign-proof.v1` artifact with selected-profile/campaign lease proof, caller speech, assistant transcript/audio after that caller turn, and live Speak transcript continuity.
-9. Final certification uses `npm run qa:production-calltools-s-tier -- --liveProof=<proof.json>` and requires recording-derived review in or attached to that campaign proof. The reworked `qa:full-audit -- --include-live` may instead arm the selected lease and wait for the next native answered campaign invite; cleanup releases only the lease it armed. Removed direct/contact/answer-bot package aliases must not be used or reintroduced.
+9. Final certification uses `npm run qa:full-audit -- --liveProof=<proof.json>` and requires recording-derived review in or attached to that campaign proof. `qa:full-audit -- --include-live` may instead arm the selected lease and wait for the next native answered campaign invite; cleanup releases only the lease it armed. Removed direct/contact/answer-bot package aliases must not be used or reintroduced.
 
 ## Speak Profile Work
 

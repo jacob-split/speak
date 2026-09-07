@@ -22,14 +22,14 @@ const importedLead = normalizeLead({
   firstName: 'Imported',
   lastName: 'lead 4',
   business_name: 'Bruggemans Food Stores',
-  phone_on_file: '+12189300405',
+  phone_on_file: '+12025550142',
 })
 
 assert.equal(importedLead.name, 'Bruggemans Food Stores')
 assert.equal(importedLead.firstName, '')
 assert.equal(importedLead.lastName, '')
 assert.equal(importedLead.company, 'Bruggemans Food Stores')
-assert.equal(importedLead.phone, '+12189300405')
+assert.equal(importedLead.phone, '+12025550142')
 
 const realContact = normalizeLead({
   name: 'Blossom Bee',
@@ -80,9 +80,9 @@ assert.deepEqual(publicLeadContext(state), {
   last_name: '',
   name: 'Bruggemans Food Stores',
   business_name: 'Bruggemans Food Stores',
-  phone_on_file: '+12189300405',
+  phone_on_file: '+12025550142',
   email_on_file: '',
-  called_phone: '+12189300405',
+  called_phone: '+12025550142',
   context_counts: {
     hasText: false,
     urls: 0,

@@ -277,9 +277,6 @@ for (const requiredFirstPartyRouteDoc of [
   '| GET | `/api/calltools/gateway-config` | Protected CallTools WebRTC/SIP phone credential read',
   '| WS | `/api/calltools/media-gateway` | Protected Speak-owned WebRTC/SIP media-gateway socket.',
   '| POST | `/api/webhooks/workspace-email` | Trusted Workspace/Gmail sent/received event normalizer.',
-  '| OPTIONS | `/api/here-now/upload-proxy` | CORS preflight for the here.now signed-upload proxy.',
-  '| PUT | `/api/here-now/upload-proxy?url={signedR2Url}` | Raw upload proxy for signed here.now R2 drive URLs',
-  '| ANY | `/api/here-now/api/v1/*` | Narrow here.now v1 CORS proxy.',
 ]) {
   if (!apiReference.includes(requiredFirstPartyRouteDoc)) {
     failures.push(`backend API reference missing first-party route doc: ${requiredFirstPartyRouteDoc}`)

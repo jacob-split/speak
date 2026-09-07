@@ -12,47 +12,15 @@ export function getHumeApiKey() {
 }
 
 export function getXaiApiKey() {
-  const envValue = cleanSecret(process.env.XAI_API_KEY)
-  if (envValue) return envValue
-  if (process.platform !== 'darwin') return ''
-  const cacheKey = 'xai-api-key'
-  if (secretCache.has(cacheKey)) return secretCache.get(cacheKey)
-
-  const value =
-    readMacKeychainAccountSecret('Speak Production', 'XAI_API_KEY') ||
-    readMacKeychainSecret(`${KEYCHAIN_SERVICE_PREFIX}-${cacheKey}`)
-  secretCache.set(cacheKey, value)
-  return value
+  return getSecret('XAI_API_KEY', 'xai-api-key')
 }
 
 export function getDeepgramApiKey() {
-  const envValue = cleanSecret(process.env.DEEPGRAM_API_KEY)
-  if (envValue) return envValue
-  if (process.platform !== 'darwin') return ''
-  const cacheKey = 'deepgram-api-key'
-  if (secretCache.has(cacheKey)) return secretCache.get(cacheKey)
-
-  const value =
-    readMacKeychainAccountSecret('Speak Production', 'DEEPGRAM_API_KEY') ||
-    readMacKeychainSecret(cacheKey)
-  secretCache.set(cacheKey, value)
-  return value
+  return getSecret('DEEPGRAM_API_KEY', 'deepgram-api-key')
 }
 
 export function getPersonalPhoneSpeakHandoffSecret() {
-  const envValue = cleanSecret(process.env.PERSONAL_PHONE_SPEAK_HANDOFF_SECRET)
-  if (envValue) return envValue
-  if (process.platform !== 'darwin') return ''
-  const cacheKey = 'personal-phone-speak-handoff-secret'
-  if (secretCache.has(cacheKey)) return secretCache.get(cacheKey)
-
-  const value =
-    readMacKeychainAccountSecret(
-      'Speak Production',
-      'PERSONAL_PHONE_SPEAK_HANDOFF_SECRET',
-    ) || readMacKeychainSecret('personal-phone-speak-handoff-secret')
-  secretCache.set(cacheKey, value)
-  return value
+  return getSecret('PERSONAL_PHONE_SPEAK_HANDOFF_SECRET', 'personal-phone-speak-handoff-secret')
 }
 
 export function getBlueBubblesPassword() {
@@ -98,23 +66,6 @@ function readMacKeychainSecret(service) {
     }
   }
   return ''
-}
-
-function readMacKeychainAccountSecret(service, account) {
-  try {
-    return cleanSecret(
-      execFileSync(
-        'security',
-        ['find-generic-password', '-s', service, '-a', account, '-w'],
-        {
-          encoding: 'utf8',
-          stdio: ['ignore', 'pipe', 'ignore'],
-        },
-      ),
-    )
-  } catch {
-    return ''
-  }
 }
 
 function cleanSecret(value) {

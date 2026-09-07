@@ -26,7 +26,7 @@ import {
 import { assertPersonalPhoneInboundSourceCompatibility } from '../server/workspace-store.mjs'
 
 const nowMs = Date.parse('2026-07-13T05:00:00.000Z')
-const expectedDid = '+14088691882'
+const expectedDid = '+12025550143'
 const sourceId = 'bluebubbles:contacts'
 const personalPhoneConfigModule = await import(
   '../src/personalPhoneInboundConfig.ts'
@@ -688,7 +688,7 @@ assert.doesNotMatch(
   /PERSONAL_PHONE_CONTACTS_SOURCE_ID \|\| 'bluebubbles:contacts'/,
 )
 assert.doesNotMatch(serverIndex, /PERSONAL_PHONE_TELNYX_DID \|\|\s*process\.env\.PERSONAL_PHONE_NUMBER/)
-assert.match(secrets, /readMacKeychainSecret\('personal-phone-speak-handoff-secret'\)/)
+assert.match(secrets, /getSecret\('PERSONAL_PHONE_SPEAK_HANDOFF_SECRET', 'personal-phone-speak-handoff-secret'\)/)
 assert.doesNotMatch(secrets, /readMacKeychainSecret\('speak-personal-phone-handoff-secret'\)/)
 assert.match(settingsPanel, /Answer missed Personal Phone calls/)
 assert.match(settingsPanel, /Find Personal Phone contact/)
