@@ -68,6 +68,7 @@
     "qa:lead-identity": "node scripts/check-lead-identity.mjs",
     "qa:source-import-merge": "node scripts/check-source-import-merge.mjs",
     "qa:phone-provider-options": "node scripts/check-phone-provider-options.mjs",
+    "qa:phone-normalization": "node scripts/check-phone-normalization.mjs",
     "qa:playground-phone-supervision": "node scripts/check-playground-phone-supervision.mjs",
     "qa:personal-phone-inbound": "node scripts/check-personal-phone-inbound.mjs",
     "qa:context-runtime": "node scripts/check-context-runtime.mjs",
